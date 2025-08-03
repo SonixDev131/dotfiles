@@ -45,3 +45,5 @@
 # resize-overlay-duration = 4s 200ms
 
 theme = Dracula+
+gtk-titlebar = false
+background-opacity = 0.95
