@@ -13,7 +13,7 @@ require("nvim-treesitter.configs").setup({
 			node_decremental = "<bs>",
 		},
 	},
-	auto_install = { enable = true },
+	auto_install = true,
 	highlight = {
 		enable = true,
 		disable = function(lang, buf)
@@ -43,3 +43,4 @@ vim.api.nvim_create_autocmd('PackChanged', {
 		end
 	end,
 })
+

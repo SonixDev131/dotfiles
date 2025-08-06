@@ -22,3 +22,7 @@ vim.o.softtabstop = 2
 vim.o.shiftwidth = 2     -- Size of an indent
 vim.o.shiftround = true  -- Round indent
 vim.o.smartindent = true -- Insert indents automatically
+
+-- Undo Settings
+vim.o.undofile = true
+vim.o.undolevels = 10000
