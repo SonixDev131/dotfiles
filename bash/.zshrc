@@ -64,7 +64,8 @@ alias ls='ls --color'
 alias vim='nvim'
 alias c='clear'
 alias lzd='lazydocker'
-alias sail='sh vendor/bin/sail'
+alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'
+alias nvc="nvim $HOME/.config/nvim"
 
 export PATH="/home/sonixdev/.config/herd-lite/bin:$PATH"
 export PATH="$HOME/bin/.local/scripts:$PATH"
