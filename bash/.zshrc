@@ -10,27 +10,54 @@ fi
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
-# Add in zsh plugins
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
-zinit light Aloxaf/fzf-tab
-# zinit light jeffreytse/zsh-vi-mode
+# Zinit performance optimizations
+declare -A ZINIT
+ZINIT[COMPINIT_OPTS]=-C  # Speed up compinit with -C flag
+ZINIT[OPTIMIZE_OUT_DISK_ACCESSES]=1  # Skip disk checks for better performance
 
-# Add in snippets
-zinit snippet OMZL::git.zsh
-zinit snippet OMZP::git
-zinit snippet OMZP::sudo
-zinit snippet OMZP::archlinux
-zinit snippet OMZP::aws
-zinit snippet OMZP::kubectl
-zinit snippet OMZP::kubectx
-zinit snippet OMZP::command-not-found
+# Load starship theme
+zinit ice as"command" from"gh-r" \
+          atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
+          atpull"%atclone" src"init.zsh"
+zinit light starship/starship
 
-# Load completions
-autoload -Uz compinit && compinit
+# Load programs using modern 'for' syntax
+zinit as"program" from"gh-r" for \
+    junegunn/fzf \
+    ajeetdsouza/zoxide
 
-zinit cdreplay -q
+# Load plugins with proper ordering
+zinit for \
+    light-mode \
+  zsh-users/zsh-autosuggestions \
+    light-mode \
+    atload"_zsh_highlight_bind_widgets" \
+  zsh-users/zsh-syntax-highlighting \
+    light-mode \
+    blockf \
+    atload"zicompinit; zicdreplay" \
+  zsh-users/zsh-completions \
+    light-mode \
+  Aloxaf/fzf-tab \
+    light-mode \
+    depth=1 \
+  jeffreytse/zsh-vi-mode
+
+
+# Load OMZ snippets
+zinit for \
+    OMZL::git.zsh \
+    OMZP::git \
+    OMZP::sudo \
+    OMZP::aws \
+    OMZP::kubectl \
+    OMZP::kubectx \
+    OMZP::command-not-found \
+    OMZP::docker \
+    OMZP::docker-compose
+
+# Completions are now handled by zicompinit/zicdreplay in the plugins section above
+# This provides better integration and performance
 
 # Keybindings
 bindkey -e
@@ -67,27 +94,31 @@ alias lzd='lazydocker'
 alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'
 alias nvc="nvim $HOME/.config/nvim"
 
-export PATH="/home/sonixdev/.config/herd-lite/bin:$PATH"
-export PATH="$HOME/bin/.local/scripts:$PATH"
-export PATH="$PATH:/home/sonixdev/.local/bin"
-export PHP_INI_SCAN_DIR="/home/sonixdev/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
+# Environment variables and PATH setup (consolidated and optimized)
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/platform-tools
+# PHP configuration
+export PHP_INI_SCAN_DIR="/home/sonixdev131/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
+
+# PATH exports (consolidated to avoid duplicates)
+typeset -U path  # Ensure unique PATH entries
+path=(
+  "$HOME/.local/bin"
+  "$HOME/.config/herd-lite/bin"
+  $path
+)
 
 
-function run_cursor() {
-  ~/Applications/cursor.AppImage --no-sandbox "$@" >/dev/null 2>&1 &
-}
+# Load NVM
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Load Cargo environment
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # Shell integrations
+zinit for \
+    OMZP::fzf
+
+# Initialize shell integrations
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(fzf --zsh)"
-eval "$(starship init zsh)"
-
-. "$HOME/.cargo/env"

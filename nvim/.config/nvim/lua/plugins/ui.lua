@@ -4,7 +4,7 @@ return {
     priority = 1000, -- Ensure it loads first
     opts = {
       term_colors = true,
-      transparent_background = false,
+      transparent_background = true,
       color_overrides = {
         mocha = {
           base = "#1a1a1a",
@@ -35,5 +35,5 @@ return {
   },
   -- Disable some UI plugins for performance/minimalism
   { "nvim-lualine/lualine.nvim", enabled = false },
-  { "akinsho/bufferline.nvim", enabled = false },
+  { "akinsho/bufferline.nvim",   enabled = false },
 }
