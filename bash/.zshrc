@@ -24,7 +24,7 @@ zinit light starship/starship
 # Load programs using modern 'for' syntax
 zinit as"program" from"gh-r" for \
     junegunn/fzf \
-    ajeetdsouza/zoxide
+    jesseduffield/lazygit
 
 # Load plugins with proper ordering
 zinit for \
