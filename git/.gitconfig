@@ -1,7 +1,5 @@
 [user]
-	email = son.nl215131@gmail.com
+	email = nguyenleson.dev@gmail.com
 	name = sonixdev131
 [core]
-	editor = nvim
-[color]
-	ui = true
+	autocrlf = input

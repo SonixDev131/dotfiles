@@ -107,8 +107,23 @@ return {
     optional = true,
     opts = {
       formatters_by_ft = {
-        php = { "pint", "php_cs_fixer" },
+        php = { "pint", "php_cs_fixer", stop_after_first = true },
         blade = { "blade-formatter" },
+      },
+      formatters = {
+        php_cs_fixer = {
+          append_args = { "--rules=@PSR12" },
+        }
+      },
+    },
+  },
+  {
+    "mason-org/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "phpstan",
+        "blade-formatter",
+        "php-cs-fixer",
       },
     },
   },
@@ -118,7 +133,7 @@ return {
     optional = true,
     opts = {
       linters_by_ft = {
-        php = {},
+        php = { 'phpstan' },
       },
     },
   },
