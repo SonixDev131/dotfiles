@@ -23,6 +23,7 @@ zinit light starship/starship
 
 # Load programs using modern 'for' syntax
 zinit as"program" from"gh-r" for \
+    ajeetdsouza/zoxide \
     junegunn/fzf \
     jesseduffield/lazygit
 
@@ -88,11 +89,11 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
 alias ls='ls --color'
-alias vim='nvim'
+alias n='nvim'
+alias nc="nvim $HOME/.config/nvim"
 alias c='clear'
 alias lzd='lazydocker'
 alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'
-alias nvc="nvim $HOME/.config/nvim"
 
 # Environment variables and PATH setup (consolidated and optimized)
 export NVM_DIR="$HOME/.nvm"
