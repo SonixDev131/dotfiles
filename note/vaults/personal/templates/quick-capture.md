@@ -1,8 +1,3 @@
-## 📑 **Template 4: Quick Capture Template**
-
-**File:** `~/vaults/personal/templates/quick-capture.md`
-
-```markdown
 # {{title}}
 
 **Source**: 
@@ -25,4 +20,3 @@
 - [ ] 
 
 #quick-capture #{{date}}
-```
