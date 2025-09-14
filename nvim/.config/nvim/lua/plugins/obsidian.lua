@@ -170,21 +170,11 @@ return {
         -- PERSONAL VAULT - Personal notes and journaling
         {
           name = "personal",
-          path = "~/vaults/personal",
+          path = "~/vaults/",
           overrides = {
             notes_subdir = "notes", -- Store notes in /notes subfolder
           },
         },
-
-        -- WORK VAULT - Professional notes and projects
-        {
-          name = "work",
-          path = "~/vaults/work",
-          overrides = {
-            notes_subdir = "work-notes", -- Store in /work-notes subfolder
-          },
-        },
-
         -- DYNAMIC WORKSPACE - Works with any markdown file outside vaults
         -- This allows obsidian.nvim features on any .md file
         {
@@ -210,11 +200,11 @@ return {
         date_format = "%Y-%m-%d",
         time_format = "%H:%M",
         -- A map for custom variables, the key should be the variable and the value a function
-        substitutions = {
-          id = function()
-            return tostring(os.time())
-          end,
-        },
+        -- substitutions = {
+        --   id = function()
+        --     return tostring(os.time())
+        --   end,
+        -- },
       },
 
       -- =====================================================
@@ -231,10 +221,10 @@ return {
       -- =====================================================
       daily_notes = {
         folder = "notes/dailies",         -- Where to store daily notes
-        date_format = "%Y-%m-%d",         -- File naming: 2024-01-15.md
-        alias_format = "%B %-d, %Y",      -- Display name: January 15, 2024
+        date_format = "%Y-%m-%d-%a",      -- File naming: 2024-01-15.md
+        time_format = "%H:%M",
         default_tags = { "daily-notes" }, -- Auto-add tags to daily notes
-        template = nil,                   -- Optional template for daily notes
+        template = "daily_note.md",       -- Template for new daily notes
       },
 
       -- =====================================================
@@ -260,45 +250,45 @@ return {
           end
         end
         -- Result: "1642678456-my-note" (timestamp + title)
-        return tostring(os.time()) .. "-" .. suffix
+        return suffix
       end,
 
       -- =====================================================
       -- FRONTMATTER GENERATION - YAML metadata for notes
       -- =====================================================
-      note_frontmatter_func = function(note)
-        -- Add note title as an alias for easier linking
-        if note.title then
-          note:add_alias(note.title)
-        end
-
-        -- Default metadata structure
-        local out = {
-          id = note.id,           -- Unique identifier
-          aliases = note.aliases, -- Alternative names for linking
-          tags = note.tags,       -- Categorization tags
-          author = "s0n1xd3v",    -- Your username
-          status = "draft",       -- draft, in-progress, completed
-          -- type = "note",          -- note, daily, meeting, project
-        }
-
-        -- Preserve any manually added frontmatter fields
-        if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
-          for k, v in pairs(note.metadata) do
-            out[k] = v
-          end
-        end
-
-        return out
-      end,
+      -- note_frontmatter_func = function(note)
+      --   -- Add note title as an alias for easier linking
+      --   if note.title then
+      --     note:add_alias(note.title)
+      --   end
+      --
+      --   -- Default metadata structure
+      --   local out = {
+      --     id = note.id,           -- Unique identifier
+      --     aliases = note.aliases, -- Alternative names for linking
+      --     tags = note.tags,       -- Categorization tags
+      --     author = "s0n1xd3v",    -- Your username
+      --     status = "draft",       -- draft, in-progress, completed
+      --     -- type = "note",          -- note, daily, meeting, project
+      --   }
+      --
+      --   -- Preserve any manually added frontmatter fields
+      --   if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
+      --     for k, v in pairs(note.metadata) do
+      --       out[k] = v
+      --     end
+      --   end
+      --
+      --   return out
+      -- end,
 
       -- =====================================================
       -- LINK FUNCTIONS - How links are formatted
       -- =====================================================
-      wiki_link_func = function(opts)
-        -- Use obsidian's default wiki link formatting
-        return require("obsidian.util").wiki_link_id_prefix(opts)
-      end,
+      -- wiki_link_func = function(opts)
+      --   -- Use obsidian's default wiki link formatting
+      --   return require("obsidian.util").wiki_link_id_prefix(opts)
+      -- end,
 
       -- =====================================================
       -- UI CONFIGURATION - Visual appearance and styling
