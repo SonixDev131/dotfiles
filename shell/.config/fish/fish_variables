@@ -36,5 +36,5 @@ SETUVAR fish_pager_color_description:yellow\x1e\x2di
 SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
-SETUVAR fish_user_paths:/home/sonixdev131/\x2econfig/herd\x2dlite/bin\x1e/home/sonixdev131/\x2elocal/bin
+SETUVAR fish_user_paths:/home/sonixdev131/\x2econfig/tmux/plugins/tmux\x2dsession\x2dwizard/bin\x1e/home/sonixdev131/\x2econfig/herd\x2dlite/bin\x1e/home/sonixdev131/\x2elocal/bin
 SETUVAR nvm_default_version:latest
