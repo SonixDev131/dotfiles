@@ -5,13 +5,6 @@ return {
     opts = {
       term_colors = true,
       transparent_background = true,
-      -- color_overrides = {
-      --   mocha = {
-      --     base = "#1a1a1a",
-      --     mantle = "#141414",
-      --     crust = "#242424",
-      --   },
-      -- },
     },
   },
   {
