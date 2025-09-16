@@ -1,7 +1,5 @@
 return {
-  -- =====================================================
-  -- BLINK.CMP SETUP - Modern completion engine
-  -- =====================================================
+  { "MeanderingProgrammer/render-markdown.nvim", enabled = false },
   {
     "saghen/blink.cmp",
     dependencies = {
@@ -16,10 +14,6 @@ return {
       },
     },
   },
-
-  -- =====================================================
-  -- OBSIDIAN.NVIM - Obsidian integration for Neovim
-  -- =====================================================
   {
     "epwalsh/obsidian.nvim",
     version = "*",   -- Use latest stable release
