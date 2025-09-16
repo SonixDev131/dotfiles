@@ -113,6 +113,9 @@ return {
       formatters = {
         php_cs_fixer = {
           append_args = { "--rules=@PSR12" },
+          env = {
+            PHP_CS_FIXER_IGNORE_ENV = true,
+          }
         }
       },
     },
