@@ -23,8 +23,11 @@ set -gx PHP_INI_SCAN_DIR "$HOME/.config/herd-lite/bin"
 alias v='nvim'
 alias vim='nvim'
 alias vc='nvim $HOME/.config/nvim'
-alias ls='ls --color=auto'
-alias ll='ls -la'
+alias vf='nvim $HOME/.config/fish/config.fish'
+alias sf='source $HOME/.config/fish/config.fish'
+alias ls='eza --classify=auto --color --group-directories-first --sort=extension -A --icons'
+alias lla='eza --classify=auto --color --group-directories-first --sort=extension -a -l --octal-permissions --icons --git'
+alias lt='eza --tree --level=2 --group-directories-first --icons'
 alias grep='grep --color=auto'
 
 # Prompt initialization
