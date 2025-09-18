@@ -149,6 +149,14 @@ setup_config() {
     return 1
   }
 
+  # Backup existing fish config before stowing
+  if [[ -d "$HOME/.config/fish" ]]; then
+    echo "Backing up existing fish config..."
+    local fish_backup="$HOME/.config/fish.backup.$(date +%Y%m%d_%H%M%S)"
+    mv "$HOME/.config/fish" "$fish_backup"
+    echo "Fish config backed up to: $fish_backup"
+  fi
+
   # stow specific packages
   local packages=(
     "shell"
@@ -161,7 +169,7 @@ setup_config() {
   for package in "${packages[@]}"; do
     if [[ -d "$package" ]]; then
       echo "Stowing $package..."
-      stow -v --override='.*' "$package" || {
+      stow -v "$package" || {
         echo "❌ Failed to stow $package"
         return 1
       }
