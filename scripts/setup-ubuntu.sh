@@ -152,6 +152,12 @@ setup_config() {
   # Remove known conflicting configs
   echo "Removing existing configs that might conflict..."
   rm -rf ~/.config/fish
+  rm -rf ~/.config/nvim
+  rm -rf ~/.config/tmux
+  rm -rf ~/.config/eza
+  rm -rf ~/.config/starship
+  rm -rf ~/dev-brain
+  rm -f ~/.gitconfig
 
   # stow specific packages
   local packages=(
@@ -161,8 +167,10 @@ setup_config() {
     "dev-brain"
     "eza"
     "nvim"
+    "starship"
   )
   for package in "${packages[@]}"; do
+  
     if [[ -d "$package" ]]; then
       echo "Stowing $package..."
       stow -v "$package" || {
