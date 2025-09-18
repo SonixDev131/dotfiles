@@ -171,27 +171,11 @@ setup_config() {
   done
 }
 
-confirm_installation() {
-  echo "🚀 This script will:"
-  echo "   • Update your Ubuntu system"
-  echo "   • Install Homebrew and development tools"
-  echo "   • Install CLI utilities via Homebrew"
-  echo "   • Clone and setup dotfiles from GitHub"
-  echo "   • Change your default shell to Fish"
-  echo
-  read -p "Do you want to continue? (y/N): " -n 1 -r
-  echo
-  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-    echo "Installation cancelled."
-    exit 0
-  fi
-}
-
 # Main function
 main() {
   echo "🚀 Starting Ubuntu setup..."
 
-  confirm_installation
+  # confirm_installation
 
   update_system
   install_homebrew
