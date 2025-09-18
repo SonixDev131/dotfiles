@@ -58,3 +58,5 @@ alias grep='grep --color=auto'
 # - Completion settings
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# For macOS with Homebrew on Apple Silicon
+# eval "$(/opt/homebrew/bin/brew shellenv)"

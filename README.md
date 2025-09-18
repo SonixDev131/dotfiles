@@ -3,8 +3,7 @@
 ### Ubuntu
 
 ````bash
-curl -o- https://raw.githubusercontent.com/SonixDev131/dotfiles/main/scripts/setup-ubuntu.sh | bash
-```
+curl -o- https://raw.githubusercontent.com/SonixDev131/dotfiles/main/setup-ubuntu.sh | bash
 
 ## 📦 Contents
 
