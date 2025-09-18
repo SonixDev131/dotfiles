@@ -149,13 +149,9 @@ setup_config() {
     return 1
   }
 
-  # Backup existing fish config before stowing
-  if [[ -d "$HOME/.config/fish" ]]; then
-    echo "Backing up existing fish config..."
-    local fish_backup="$HOME/.config/fish.backup.$(date +%Y%m%d_%H%M%S)"
-    mv "$HOME/.config/fish" "$fish_backup"
-    echo "Fish config backed up to: $fish_backup"
-  fi
+  # Remove known conflicting configs
+  echo "Removing existing configs that might conflict..."
+  rm -rf ~/.config/fish
 
   # stow specific packages
   local packages=(
