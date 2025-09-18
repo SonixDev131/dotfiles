@@ -48,7 +48,7 @@ install_homebrew() {
 install_rust() {
   if ! command -v rustc &>/dev/null; then
     echo "Installing Rust..."
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
     echo "suscessfully installed Rust"
   else
     echo "Rust is already installed"
