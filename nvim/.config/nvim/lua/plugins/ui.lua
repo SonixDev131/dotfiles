@@ -29,4 +29,5 @@ return {
   -- Disable some UI plugins for performance/minimalism
   { "nvim-lualine/lualine.nvim", enabled = false },
   { "akinsho/bufferline.nvim",   enabled = false },
+  { "folke/snacks.nvim",         opts = { dashboard = { enabled = false } } }
 }
