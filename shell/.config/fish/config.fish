@@ -7,7 +7,7 @@ set -g fish_key_bindings fish_vi_key_bindings
 # Path additions
 fish_add_path -g $HOME/.local/bin
 fish_add_path -g $HOME/.config/herd-lite/bin
-fish_add_path $HOME/.config/tmux/plugins/tmux-session-wizard/bin
+fish_add_path -g $HOME/.config/tmux/plugins/tmux-session-wizard/bin
 
 # Rust environment
 if test -f "$HOME/.cargo/env.fish"

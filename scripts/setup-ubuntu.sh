@@ -93,9 +93,9 @@ install_cli_tools() {
     "curlie"
     "starship"
     "stow"
-    "neovim"
     "tmux"
-    "node"
+    "fzf"
+    "bob"
   )
 
   # Install each package
