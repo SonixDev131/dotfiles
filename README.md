@@ -1,3 +1,11 @@
+## 🚀 Quick Installation
+
+### Ubuntu
+
+````bash
+curl -o- https://raw.githubusercontent.com/SonixDev131/dotfiles/main/scripts/setup-ubuntu.sh | bash
+```
+
 ## 📦 Contents
 
 - **Shell**: `.zshrc`
@@ -18,7 +26,7 @@
 
   # macOS (Homebrew)
   brew install stow
-  ```
+````
 
 ### 🚀 Installation
 
