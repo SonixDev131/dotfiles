@@ -6,8 +6,26 @@
 
 set -e
 
-sudo apt update && sudo apt upgrade -y
-# sudo apt install build-essential procps curl file git -y
+# Check if running on Ubuntu
+if ! grep -q "Ubuntu" /etc/os-release 2>/dev/null; then
+  echo "❌ This script only supports Ubuntu"
+  exit 1
+fi
+
+# Check if not running as root
+if [[ $EUID -eq 0 ]]; then
+  echo "❌ This script should not be run as root"
+  exit 1
+fi
+
+update_system() {
+  echo "📦 Updating Ubuntu system..."
+  (sudo apt update && sudo apt upgrade -y) || {
+    echo "❌ Failed to update system"
+    return 1
+  }
+  echo "✅ System updated successfully"
+}
 
 # Check if Homebrew is already installed
 # Install Homebrew
@@ -32,7 +50,6 @@ install_rust() {
     echo "Installing Rust..."
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
     echo "suscessfully installed Rust"
-    rustc --version
   else
     echo "Rust is already installed"
     echo "Updating Rust..."
@@ -89,23 +106,102 @@ install_cli_tools() {
   echo "All CLI tools installed!"
 }
 
+change_shell_to_fish() {
+  local fish_path
+  fish_path=$(which fish)
+
+  if [ "$SHELL" != "$fish_path" ]; then
+    echo "Changing default shell to fish..."
+
+    if ! grep -q "$fish_path" /etc/shells; then
+      echo "Adding fish to /etc/shells..."
+      echo "$fish_path" | sudo tee -a /etc/shells
+    fi
+
+    chsh -s "$fish_path" || {
+      echo "❌ Failed to change shell to fish"
+      return 1
+    }
+
+    echo "✅ Default shell changed to fish"
+  else
+    echo "Fish is already the default shell"
+  fi
+}
+
+setup_config() {
+  local dotfiles_dir="$HOME/dotfiles"
+
+  # backup existing config files
+  if [[ -d "$dotfiles_dir" ]]; then
+    echo "Backing up existing dotfiles..."
+    mv "$dotfiles_dir" "${dotfiles_dir}_backup_$(date +%Y%m%d%H%M%S)"
+  fi
+
+  # clone dotfiles repo
+  git clone https://github.com/SonixDev131/dotfiles.git "$dotfiles_dir" || {
+    echo "❌ Failed to clone dotfiles repository"
+    return 1
+  }
+
+  cd "$dotfiles_dir" || {
+    echo "❌ Failed to change directory to dotfiles"
+    return 1
+  }
+
+  # stow specific packages
+  local packages=(
+    "shell"
+    "git"
+    "tmux"
+    "dev-brain"
+    "eza"
+    "nvim"
+  )
+  for package in "${packages[@]}"; do
+    if [[ -d "$package" ]]; then
+      echo "Stowing $package..."
+      stow -Rv "$package" || {
+        echo "❌ Failed to stow $package"
+        return 1
+      }
+    else
+      echo "⚠️ Package directory $package does not exist in dotfiles"
+    fi
+  done
+}
+
+confirm_installation() {
+  echo "🚀 This script will:"
+  echo "   • Update your Ubuntu system"
+  echo "   • Install Homebrew and development tools"
+  echo "   • Install CLI utilities via Homebrew"
+  echo "   • Clone and setup dotfiles from GitHub"
+  echo "   • Change your default shell to Fish"
+  echo
+  read -p "Do you want to continue? (y/N): " -n 1 -r
+  echo
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo "Installation cancelled."
+    exit 0
+  fi
+}
+
 # Main function
 main() {
-  echo "🚀 Starting macOS setup..."
+  echo "🚀 Starting Ubuntu setup..."
 
-  # Install Homebrew first
+  confirm_installation
+
+  update_system
   install_homebrew
-
-  # Install CLI tools
+  install_rust
   install_cli_tools
-
-  # Clone and setup dotfiles
-  # ... (your dotfiles setup code)
-
-  # Configure fish shell
-  # ... (your fish configuration)
+  setup_config
+  change_shell_to_fish
 
   echo "🎉 Setup completed!"
+  echo "Please restart your terminal to use Fish shell."
 }
 
 # Run the script
