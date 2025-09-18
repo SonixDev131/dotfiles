@@ -161,7 +161,7 @@ setup_config() {
   for package in "${packages[@]}"; do
     if [[ -d "$package" ]]; then
       echo "Stowing $package..."
-      stow -Rv "$package" || {
+      stow -v --override='.*' "$package" || {
         echo "❌ Failed to stow $package"
         return 1
       }
