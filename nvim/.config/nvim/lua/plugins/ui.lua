@@ -8,9 +8,19 @@ return {
     },
   },
   {
+    "folke/tokyonight.nvim",
+    opts = {
+      transparent = true,
+      styles = {
+        sidebars = "transparent",
+        floats = "transparent",
+      },
+    },
+  },
+  {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "catppuccin-mocha",
+      colorscheme = "tokyonight",
     },
   },
   -- Noice UI enhancements
@@ -22,6 +32,10 @@ return {
         {
           filter = { event = "notify", find = "No information available" },
           opts = { skip = true },
+        },
+        {
+          view = "notify",
+          filter = { event = "msg_showmode" },
         },
       },
     },

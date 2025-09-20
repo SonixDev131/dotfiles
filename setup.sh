@@ -142,6 +142,8 @@ install_cli_tools() {
     "tmux"
     "fzf"
     "bob"
+    "jq"
+    "unzip"
   )
 
   # Install each package

@@ -1,5 +1,25 @@
 return {
-  { "MeanderingProgrammer/render-markdown.nvim", enabled = false },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown", "norg", "rmd", "org", "codecompanion" },
+    config = function()
+      require("render-markdown").setup({})
+      Snacks.toggle({
+        name = "Render Markdown",
+        get = function()
+          return require("render-markdown.state").enabled
+        end,
+        set = function(enabled)
+          local m = require("render-markdown")
+          if enabled then
+            m.enable()
+          else
+            m.disable()
+          end
+        end,
+      }):map("<leader>um")
+    end,
+  },
   {
     "saghen/blink.cmp",
     dependencies = {
@@ -13,6 +33,34 @@ return {
         compat = { "obsidian", "obsidian_new", "obsidian_tags" },
       },
     },
+  },
+  {
+    "bngarren/checkmate.nvim",
+    ft = "markdown", -- Lazy loads for Markdown files matching patterns in 'files'
+    opts = {
+      todo_states = {
+        -- Custom states
+        in_progress = {
+          marker = "🔄",
+          markdown = ".",      -- Saved as `- [.]`
+          type = "incomplete", -- Counts as "not done"
+          order = 50,
+        },
+        cancelled = {
+          marker = "❌",
+          markdown = "c",    -- Saved as `- [c]`
+          type = "complete", -- Counts as "done"
+          order = 2,
+        },
+        on_hold = {
+          marker = "⏸ ",
+          markdown = "/",    -- Saved as `- [/]`
+          type = "inactive", -- Ignored in counts
+          order = 100,
+        }
+      }
+    },
+
   },
   {
     "epwalsh/obsidian.nvim",
@@ -225,7 +273,7 @@ return {
       -- UI CONFIGURATION - Visual appearance and styling
       -- =====================================================
       ui = {
-        enable = true,          -- Enable UI enhancements
+        enable = false,         -- Enable UI enhancements
         update_debounce = 200,  -- Delay before UI updates (ms)
         max_file_length = 5000, -- Don't render UI for large files
 
